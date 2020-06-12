@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <button @click="login">{{msg}}</button>
+    <el-button @click="login">{{msg}}</el-button>
   </div>
 </template>
 
@@ -14,19 +14,15 @@ export default {
   },
   methods: {
     login () {
-      // 天坑
-      this.axiosInstance.post('login', {
+      this.postKeyValueRequest('/login', {
         'username': 'qxdn',
         'password': '123456'
-      }, {
-        transformRequest: [ (data) => {
-          return this.qs.stringify(data)
-        }]
       }).then(function (response) {
         console.log(response)
       }).catch(function (error) {
         console.log(error)
       })
+      // 天坑
     }
   }
 }

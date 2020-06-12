@@ -4,17 +4,17 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import qs from 'qs'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+import {postKeyValueRequest} from './utils/api'
+
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
-var axiosInstance = axios.create({
-  baseURL: 'http://localhost:8081'
-})
-
-Vue.prototype.axiosInstance = axiosInstance
+Vue.prototype.postKeyValueRequest = postKeyValueRequest
 Vue.prototype.axios = axios
-Vue.prototype.qs = qs
 
 /* eslint-disable no-new */
 new Vue({
