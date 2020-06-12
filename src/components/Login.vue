@@ -54,11 +54,13 @@ export default {
           this.postKeyValueRequest('/login', this.loginForm).then((response) => {
             this.loading = false
             console.log(response)
-          }).catch(function (error) {
+          }).catch((error) => {
+            this.loading = false
+            this.$message.error('登录失败')
             console.log(error)
           })
         } else {
-          console.log(false)
+          this.$message.error('请输入正确的数据')
           return false
         }
       })

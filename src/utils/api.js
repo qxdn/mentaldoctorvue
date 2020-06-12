@@ -18,3 +18,19 @@ export const postKeyValueRequest = (url, params) => {
     }
   })
 }
+
+export const postRequest = (url, params) => {
+  return axiosInstance.post(url, params)
+}
+
+export const getRequest = (url, params) => {
+  return axiosInstance.get(url, params)
+}
+
+export const putRequest = (url, params) => {
+  return axiosInstance.put(url, params)
+}
+
+export const deleteRequest = (url, params) => {
+  return axiosInstance.delete(url, params)
+}
