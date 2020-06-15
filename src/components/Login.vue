@@ -23,7 +23,8 @@
           @keydown.enter.native="submitLogin"
         ></el-input>
       </el-form-item>
-      <el-button size="normal" type="primary" style="width: 100%;" @click="submitLogin">登录</el-button>
+      <el-button size="small" type="primary"  @click="submitLogin">登录</el-button>
+      <el-button size="small"  @click="toRegister">注册</el-button>
     </el-form>
   </div>
 </template>
@@ -53,7 +54,14 @@ export default {
           this.loading = true
           this.postKeyValueRequest('/login', this.loginForm).then((response) => {
             this.loading = false
-            console.log(response)
+            if (response.data.status === 500) {
+              this.$message.error(response.data.obj)
+            }
+            if (response.data.status === 200) {
+              window.localStorage.setItem('Token', response.data.obj)
+              this.axiosSetHeader(window.localStorage.getItem('Token'))
+              this.$router.push({path: '/'})
+            }
           }).catch((error) => {
             this.loading = false
             this.$message.error('登录失败')
@@ -64,6 +72,9 @@ export default {
           return false
         }
       })
+    },
+    toRegister () {
+      this.$router.push({path: '/register'})
     }
   }
 }

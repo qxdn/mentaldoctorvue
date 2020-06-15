@@ -7,7 +7,7 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import {postKeyValueRequest, postRequest, getRequest, putRequest, deleteRequest} from './utils/api'
+import {postKeyValueRequest, postRequest, getRequest, putRequest, deleteRequest, axiosSetHeader, axiosGetHeader} from './utils/api'
 
 Vue.use(ElementUI)
 
@@ -18,6 +18,8 @@ Vue.prototype.postRequest = postRequest
 Vue.prototype.getRequest = getRequest
 Vue.prototype.putRequest = putRequest
 Vue.prototype.deleteRequest = deleteRequest
+Vue.prototype.axiosSetHeader = axiosSetHeader
+Vue.prototype.axiosGetHeader = axiosGetHeader
 Vue.prototype.axios = axios
 
 /* eslint-disable no-new */

@@ -5,6 +5,12 @@ var axiosInstance = axios.create({
   baseURL: 'http://localhost:8081'
 })
 
+if (window.localStorage.getItem('token')) {
+  axiosInstance.defaults.headers.common['Token'] = window.localStorage.getItem('token')
+} else {
+  axiosInstance.defaults.headers.common['Token'] = 'token'
+}
+
 export const postKeyValueRequest = (url, params) => {
   return axiosInstance({
     method: 'post',
@@ -33,4 +39,12 @@ export const putRequest = (url, params) => {
 
 export const deleteRequest = (url, params) => {
   return axiosInstance.delete(url, params)
+}
+
+export const axiosSetHeader = (token) => {
+  axiosInstance.defaults.headers.common['Token'] = token
+}
+
+export const axiosGetHeader = () => {
+  return axiosInstance.defaults.headers.common['Token']
 }

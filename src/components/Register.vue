@@ -15,6 +15,7 @@
       <el-input size="normal" type="password" v-model="registerForm.rePassword"></el-input>
     </el-form-item>
     <el-button size="normal" type="primary" style="width: 100%;" @click="submitRegister">注册</el-button>
+    <router-link to="/login">已有账号去登陆</router-link>
     </el-form>
   </div>
 </template>
