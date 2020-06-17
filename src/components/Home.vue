@@ -34,7 +34,19 @@ export default {
     },
     toRegister () {
       this.$router.push({path: '/register'})
+    },
+    isUserLogin () {
+      this.getRequest('/isLogin', null).then((response) => {
+        if (response.status === 500) {
+          this.isLogin = false
+        } else if (response.status === 200) {
+          this.isLogin = true
+        }
+      })
     }
+  },
+  created: function () {
+    this.isUserLogin()
   }
 }
 </script>

@@ -58,8 +58,10 @@ export default {
               this.$message.error(response.data.obj)
             }
             if (response.data.status === 200) {
-              window.localStorage.setItem('Token', response.data.obj)
-              this.axiosSetHeader(window.localStorage.getItem('Token'))
+              var token = response.data.obj
+              token = 'Bearer' + token
+              window.localStorage.setItem('Token', token)
+              this.axiosSetHeader(token)
               this.$router.push({path: '/'})
             }
           }).catch((error) => {

@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Home from '@/components/Home'
 import PostList from '@/components/PostList'
+import Post from '@/components/Post'
 
 Vue.use(Router)
 
@@ -12,7 +13,18 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: 'post',
+          name: 'PostList',
+          component: PostList
+        }, {
+          path: 'post/:id',
+          name: 'Post',
+          component: Post
+        }
+      ]
     },
     {
       path: '/login',
@@ -23,10 +35,6 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
-    }, {
-      path: '/post',
-      name: 'PostList',
-      component: PostList
     }
   ]
 })

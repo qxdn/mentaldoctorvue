@@ -5,10 +5,10 @@ var axiosInstance = axios.create({
   baseURL: 'http://localhost:8081'
 })
 
-if (window.localStorage.getItem('token')) {
-  axiosInstance.defaults.headers.common['Token'] = window.localStorage.getItem('token')
+if (window.localStorage.getItem('Token')) {
+  axiosInstance.defaults.headers.common['Token'] = window.localStorage.getItem('Token')
 } else {
-  axiosInstance.defaults.headers.common['Token'] = 'token'
+  axiosInstance.defaults.headers.common['Token'] = ''
 }
 
 export const postKeyValueRequest = (url, params) => {

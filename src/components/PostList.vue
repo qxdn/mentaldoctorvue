@@ -21,7 +21,15 @@ export default {
       pageSize: 10,
       total: 1,
       currentPage: 1,
-      postList: ''
+      postList: [{
+        title: '',
+        content: '',
+        createTime: '',
+        user: {
+          uuid: '',
+          username: ''
+        }
+      }]
     }
   },
   methods: {
