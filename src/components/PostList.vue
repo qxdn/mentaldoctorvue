@@ -1,6 +1,17 @@
 <template>
   <div>
-    <p v-for="(item,i) in postList" :key="i">{{item}}</p>
+    <div v-for="(item,i) in postList" :key="i">
+      <el-card @click.native="gotoHref(i)">
+        <div slot="header">
+          <!--有空改text-->
+          <avatar :username="item.user.username"></avatar>
+          <span>{{item.title}}</span>
+        </div>
+        <div>
+          <span>{{item.content}}</span>
+        </div>
+      </el-card>
+    </div>
     <el-pagination
       background
       layout="total, prev, pager, next, jumper"
@@ -14,7 +25,9 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import Avatar from 'vue-avatar'
+export default Vue.extend({
   name: 'PostList',
   data () {
     return {
@@ -22,6 +35,7 @@ export default {
       total: 1,
       currentPage: 1,
       postList: [{
+        id: '',
         title: '',
         content: '',
         createTime: '',
@@ -49,12 +63,20 @@ export default {
       this.total = response.data.totalElements
       this.postList = response.data.content
       this.pageSize = response.data.size
+    },
+    gotoHref (index) {
+      let url = '/post/' + this.postList[index].id
+      const routerUrl = this.$router.resolve({path: url})
+      window.open(routerUrl.href, '_blank')
     }
   },
   created: function () {
     this.initPage()
+  },
+  components: {
+    Avatar
   }
-}
+})
 </script>
 
 <style>
