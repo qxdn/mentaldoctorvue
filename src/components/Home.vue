@@ -8,7 +8,7 @@
         </div>
         <div v-if="isLogin" style="margin-right">
           <el-dropdown>
-            <div>{{user.username}}</div>
+            <div><avatar :username="user.username" ></avatar></div>
             <el-dropdown-menu>
               <el-dropdown-item icon="el-icon-user">个人中心</el-dropdown-item>
               <el-dropdown-item icon="el-icon-switch-button">注销</el-dropdown-item>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import Avatar from 'vue-avatar'
 export default {
   data () {
     return {
@@ -59,6 +60,9 @@ export default {
   },
   created: function () {
     this.isUserLogin()
+  },
+  components: {
+    Avatar
   }
 }
 </script>
