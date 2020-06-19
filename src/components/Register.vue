@@ -4,15 +4,21 @@
       ref="registerForm"
       :model="registerForm"
       :rules="rules"
+      v-loading="loading"
+      element-loading-text="正在注册..."
+      element-loading-spinner="el-icon-loading"
+      element-loading-background="rgba(0, 0, 0, 0.8)"
+      class="loginContainer"
     >
+    <h3 class="loginTitle">注册</h3>
     <el-form-item prop="username">
       <el-input size="normal" type="text" placeholder="请输入用户名" v-model="registerForm.username"></el-input>
     </el-form-item>
     <el-form-item prop="password">
-      <el-input size="normal" type="password" v-model="registerForm.password"/>
+      <el-input size="normal" type="password" placeholder="请输入密码" v-model="registerForm.password"/>
     </el-form-item>
     <el-form-item prop="rePassword">
-      <el-input size="normal" type="password" v-model="registerForm.rePassword"></el-input>
+      <el-input size="normal" type="password" placeholder="请再次输入密码" v-model="registerForm.rePassword"></el-input>
     </el-form-item>
     <el-button size="normal" type="primary" style="width: 100%;" @click="submitRegister">注册</el-button>
     <router-link to="/login">已有账号去登陆</router-link>
@@ -32,6 +38,7 @@ export default {
       }
     }
     return {
+      loading: false,
       registerForm: {
         username: '',
         password: '',
@@ -57,9 +64,12 @@ export default {
     submitRegister () {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
+          this.loading = true
           this.postRequest('/register', this.registerForm).then((response) => {
+            this.loading = false
             console.log(response)
           }).catch((error) => {
+            this.loading = false
             console.log(error)
           })
         } else {
@@ -73,4 +83,20 @@ export default {
 </script>
 
 <style>
+.loginContainer {
+  border-radius: 15px;
+  background-clip: padding-box;
+  margin: 180px auto;
+  width: 350px;
+  padding: 15px 35px 15px 35px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+}
+
+.loginTitle {
+  margin: 15px auto 20px auto;
+  text-align: center;
+  color: #505458;
+}
 </style>

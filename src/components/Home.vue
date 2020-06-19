@@ -1,15 +1,21 @@
 <template>
   <div>
     <el-container>
-      <el-header>
-        <div>
+      <el-header class="homeHeader">
+        <div class="title">
           <!--可以放图片-->
           心理医生
         </div>
-        <div v-if="isLogin">
-          已经登录
+        <div v-if="isLogin" style="margin-right">
+          <el-dropdown>
+            <div>{{user.username}}</div>
+            <el-dropdown-menu>
+              <el-dropdown-item icon="el-icon-user">个人中心</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-switch-button">注销</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
-        <div v-else>
+        <div v-else style="margin-right">
           <el-button type="primary" @click="toLogin">登录</el-button>
           <el-button type="primary" @click="toRegister">注册</el-button>
         </div>
@@ -25,7 +31,11 @@
 export default {
   data () {
     return {
-      isLogin: false
+      isLogin: false,
+      user: {
+        uuid: 0,
+        username: ''
+      }
     }
   },
   methods: {
@@ -37,10 +47,12 @@ export default {
     },
     isUserLogin () {
       this.getRequest('/isLogin', null).then((response) => {
-        if (response.status === 500) {
+        if (response.data.status === 500) {
           this.isLogin = false
-        } else if (response.status === 200) {
+        } else if (response.data.status === 200) {
           this.isLogin = true
+          this.user = response.data.obj
+          window.sessionStorage.setItem('user', response.data.obj)
         }
       })
     }
@@ -52,5 +64,18 @@ export default {
 </script>
 
 <style>
+.homeHeader {
+  background-color: #409eff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 15px;
+  box-sizing: border-box;
+}
 
+.homeHeader .title {
+  font-size: 30px;
+  font-family: 华文行楷;
+  color: #ffffff;
+}
 </style>
