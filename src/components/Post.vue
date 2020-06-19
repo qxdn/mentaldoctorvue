@@ -3,17 +3,28 @@
     <div>
       <h3>{{post.title}}</h3>
       <el-divider></el-divider>
-      <div>
-        {{post.user.username}}
-        {{post.createTime}}
-        {{post.content}}
+      <div v-if = "currentPage==1">
+        <el-card>
+          <div slot="header">
+          <avatar :username="post.user.username"></avatar>
+          {{post.user.username}}
+          {{post.createTime}}
+          </div>
+          {{post.content}}
+        </el-card>
       </div>
       <div v-for="(item,i) in replies" :key="i">
-        {{item.content}}
-        {{item.user.username}}
-        {{item.createTime}}
+        <el-card>
+          <div slot="header">
+            <avatar :username="item.user.username"></avatar>
+            {{item.user.username}}
+            {{item.createTime}}
+          </div>
+          {{item.content}}
+        </el-card>
       </div>
     </div>
+    <div class="pagination">
     <el-pagination
       background
       layout="prev, pager, next, jumper"
@@ -23,11 +34,14 @@
       :total="totalElements"
       >
     </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import Avatar from 'vue-avatar'
+export default Vue.extend({
   data () {
     return {
       postId: '',
@@ -75,10 +89,16 @@ export default {
     // 初始化
     this.postId = this.$route.params.id
     this.getPage(0, this.postId)
+  },
+  components: {
+    Avatar
   }
-}
+})
 </script>
 
 <style>
+.pagination {
+  text-align: center;
+}
 
 </style>

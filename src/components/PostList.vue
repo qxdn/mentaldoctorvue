@@ -5,6 +5,7 @@
         <div slot="header">
           <!--有空改text-->
           <avatar :username="item.user.username"></avatar>
+          <span>{{item.user.username}}</span>
           <span>{{item.title}}</span>
         </div>
         <div>
@@ -12,6 +13,7 @@
         </div>
       </el-card>
     </div>
+    <div class="pagination">
     <el-pagination
       background
       layout="total, prev, pager, next, jumper"
@@ -21,6 +23,7 @@
       :total="total"
       >
     </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -80,4 +83,8 @@ export default Vue.extend({
 </script>
 
 <style>
+.pagination {
+  text-align: center;
+}
+
 </style>
