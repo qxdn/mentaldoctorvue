@@ -11,6 +11,8 @@
         <div>
           <span>{{item.content}}</span>
         </div>
+        <span class="el-icon-chat-dot-square">{{item.replyCounts}}</span>
+        <span class="el-icon-view">{{item.browses}}</span>
       </el-card>
     </div>
     <div class="pagination">
@@ -23,6 +25,19 @@
       :total="total"
       >
     </el-pagination>
+    </div>
+    <div>
+      <el-form
+      :rules="rules"
+      ref="postForm"
+      :model="postForm">
+      <el-form-item prop="title">
+        <el-input size="normal" type="text" v-model="postForm.title" placeholder="标题"></el-input>
+      </el-form-item>
+      <el-form-item prop="content">
+        <el-input size="normal" type="text" v-model="postForm.content" placeholder="内容"></el-input>
+      </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -42,11 +57,19 @@ export default Vue.extend({
         title: '',
         content: '',
         createTime: '',
+        replyCounts: 0,
+        browses: 0,
         user: {
           uuid: '',
           username: ''
         }
-      }]
+      }],
+      rules: {},
+      postForm: {
+        title: '',
+        content: '',
+        uuid: ''
+      }
     }
   },
   methods: {
