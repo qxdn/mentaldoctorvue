@@ -64,7 +64,10 @@ export default Vue.extend({
       }],
       currentPage: 1,
       pageSize: 10,
-      totalElements: 1
+      totalElements: 1,
+      replyForm: {
+
+      }
     }
   },
   methods: {

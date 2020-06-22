@@ -37,6 +37,10 @@
       <el-form-item prop="content">
         <el-input size="normal" type="text" v-model="postForm.content" placeholder="内容"></el-input>
       </el-form-item>
+      <el-form-item prop="uuid" hidden="true">
+        <el-input v-model="postForm.uuid"></el-input>
+      </el-form-item>
+      <el-button @click="publish">发布</el-button>
       </el-form>
     </div>
   </div>
@@ -64,12 +68,23 @@ export default Vue.extend({
           username: ''
         }
       }],
-      rules: {},
+      rules: {
+        title: [
+          { required: true, message: '请输入主题', trigger: 'change' }
+        ],
+        content: [
+          { required: true, message: '请输入内容', trigger: 'change' }
+        ],
+        uuid: [
+          { required: true }
+        ]
+      },
       postForm: {
         title: '',
         content: '',
-        uuid: ''
-      }
+        uuid: null
+      },
+      loginUser: JSON.parse(window.sessionStorage.getItem('user'))
     }
   },
   methods: {
@@ -94,6 +109,24 @@ export default Vue.extend({
       let url = '/post/' + this.postList[index].id
       const routerUrl = this.$router.resolve({path: url})
       window.open(routerUrl.href, '_blank')
+    },
+    publish () {
+      this.postForm.uuid = this.loginUser.uuid
+      if (this.postForm.uuid === null || this.postForm.uuid === undefined) {
+        this.$message.error('请先登录')
+      } else {
+        this.$refs.postForm.validate(valid => {
+          if (valid) {
+            this.postRequest('/post/', this.postForm).then(response => {
+              this.$message.success('发布成功')
+              // 有空改一下
+              setTimeout(() => location.reload(), 1000)
+            }).catch((error) => {
+              console.log(error)
+            })
+          }
+        })
+      }
     }
   },
   created: function () {

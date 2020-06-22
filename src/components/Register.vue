@@ -67,6 +67,12 @@ export default {
           this.loading = true
           this.postRequest('/register', this.registerForm).then((response) => {
             this.loading = false
+            if (response.data === null) {
+              this.$message.error('注册失败')
+            } else {
+              this.$message.success('注册成功')
+              this.$router.push({path: '/login'})
+            }
             console.log(response)
           }).catch((error) => {
             this.loading = false
