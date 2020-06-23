@@ -35,6 +35,24 @@
       >
     </el-pagination>
     </div>
+    <div>
+      <el-form
+        ref="replyForm"
+        :rules="rules"
+        :model="replyForm"
+      >
+        <el-form-item prop="postId" hidden="true">
+          <el-input v-model="replyForm.postId"></el-input>
+        </el-form-item>
+        <el-form-item prop="content">
+          <el-input v-model="replyForm.content"></el-input>
+        </el-form-item>
+        <el-form-item prop="uuid" hidden="true">
+          <el-input v-model="replyForm.uuid"></el-input>
+        </el-form-item>
+        <el-button @click="toReply">发表回复</el-button>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -58,7 +76,7 @@ export default Vue.extend({
         content: '',
         createTime: '',
         user: {
-          uuid: '',
+          uuid: null,
           username: ''
         }
       }],
@@ -66,7 +84,14 @@ export default Vue.extend({
       pageSize: 10,
       totalElements: 1,
       replyForm: {
-
+        postId: null,
+        content: null,
+        uuid: null
+      },
+      rules: {
+        postId: [{ required: true }],
+        content: [{ required: true }],
+        uuid: [{ required: true }]
       }
     }
   },
@@ -86,6 +111,27 @@ export default Vue.extend({
       this.replies = response.data.replies
       this.pageSize = response.data.size
       this.totalElements = response.data.totalElements
+    },
+    toReply () {
+      // 发表回复
+      this.replyForm.postId = this.postId
+      this.replyForm.uuid = this.post.user.uuid
+      if (this.replyForm.uuid === null) {
+        this.$message.error('请先登录')
+      } else {
+        this.$refs.replyForm.validate(valid => {
+          if (valid) {
+            this.postRequest('/reply/', this.replyForm).then(response => {
+              // TODO: 详细判断
+              this.$message.success('发布成功')
+              // 有空改一下
+              setTimeout(() => location.reload(), 1000)
+            })
+          } else {
+            this.$message.error('回复失败')
+          }
+        })
+      }
     }
   },
   created: function () {
