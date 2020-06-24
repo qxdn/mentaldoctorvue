@@ -4,9 +4,17 @@
       <el-card @click.native="gotoHref(i)">
         <div slot="header">
           <!--有空改text-->
-          <avatar :username="item.user.username"></avatar>
-          <span>{{item.user.username}}</span>
-          <span>{{item.title}}</span>
+          <el-row>
+            <el-col :span="2">
+              <avatar :username="item.user.username" :size="40"></avatar>
+            </el-col>
+            <el-col :span="4">
+              <span class="username">{{item.user.username}}</span>
+            </el-col>
+            <el-col :span="8">
+              <span class="title">{{item.title}}</span>
+            </el-col>
+          </el-row>
         </div>
         <div>
           <span>{{item.content}}</span>
@@ -35,7 +43,7 @@
         <el-input size="normal" type="text" v-model="postForm.title" placeholder="标题"></el-input>
       </el-form-item>
       <el-form-item prop="content">
-        <el-input size="normal" type="text" v-model="postForm.content" placeholder="内容"></el-input>
+        <el-input :autosize="{ minRows: 5}"  maxlength="255"  show-word-limit type="textarea" v-model="postForm.content" placeholder="内容"></el-input>
       </el-form-item>
       <el-form-item prop="uuid" hidden="true">
         <el-input v-model="postForm.uuid"></el-input>
@@ -122,6 +130,7 @@ export default Vue.extend({
               // 有空改一下
               setTimeout(() => location.reload(), 1000)
             }).catch((error) => {
+              this.$message.error('发布失败')
               console.log(error)
             })
           }
@@ -141,6 +150,20 @@ export default Vue.extend({
 <style>
 .pagination {
   text-align: center;
+}
+
+.username {
+  font-size: 30px;
+  font-family: 华文行楷;
+}
+
+.title {
+  font-size: 30px;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+.input_content {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
 </style>

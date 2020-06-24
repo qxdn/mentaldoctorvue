@@ -1,27 +1,37 @@
 <template>
   <div>
     <div>
-      <h3>{{post.title}}</h3>
+      <h3 class="title">{{post.title}}</h3>
       <el-divider></el-divider>
-      <div v-if = "currentPage==1">
-        <el-card>
-          <div slot="header">
-          <avatar :username="post.user.username"></avatar>
-          {{post.user.username}}
-          {{post.createTime}}
-          </div>
-          {{post.content}}
-        </el-card>
-      </div>
-      <div v-for="(item,i) in replies" :key="i">
-        <el-card>
-          <div slot="header">
-            <avatar :username="item.user.username"></avatar>
-            {{item.user.username}}
-            {{item.createTime}}
-          </div>
-          {{item.content}}
-        </el-card>
+      <div class="block">
+        <el-timeline >
+          <el-timeline-item v-if = "currentPage===1" :timestamp="post.createTime" placement="top">
+            <el-card>
+              <div slot="header">
+              <el-row>
+                <el-col :span="2">
+                  <avatar :username="post.user.username" :size="40"></avatar>
+                </el-col>
+                <el-col :span="4">
+                  <span >{{post.user.username}}</span>
+                </el-col>
+              </el-row>
+              </div>
+              {{post.content}}
+            </el-card>
+          </el-timeline-item>
+          <el-timeline-item v-for="(item,i) in replies" :key="i" :timestamp="item.createTime"  placement="top">
+            <el-card>
+              <div slot="header">
+                <el-row>
+                  <el-col :span="2"><avatar :username="item.user.username" :size="40"></avatar></el-col>
+                  <el-col :span="2">{{item.user.username}}</el-col>
+                </el-row>
+              </div>
+              {{item.content}}
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
       </div>
     </div>
     <div class="pagination">
@@ -45,7 +55,7 @@
           <el-input v-model="replyForm.postId"></el-input>
         </el-form-item>
         <el-form-item prop="content">
-          <el-input v-model="replyForm.content"></el-input>
+          <el-input :autosize="{ minRows: 5}"  maxlength="255" type="textarea" show-word-limit v-model="replyForm.content"></el-input>
         </el-form-item>
         <el-form-item prop="uuid" hidden="true">
           <el-input v-model="replyForm.uuid"></el-input>
@@ -92,7 +102,8 @@ export default Vue.extend({
         postId: [{ required: true }],
         content: [{ required: true }],
         uuid: [{ required: true }]
-      }
+      },
+      loginUser: JSON.parse(window.sessionStorage.getItem('user'))
     }
   },
   methods: {
@@ -105,6 +116,8 @@ export default Vue.extend({
     },
     handleCurrentChange (val) {
       this.getPage(val - 1, this.postId)
+      // 居然不会自己变
+      this.currentPage = val
     },
     handleRespone (response) {
       this.post = response.data.post
@@ -115,7 +128,7 @@ export default Vue.extend({
     toReply () {
       // 发表回复
       this.replyForm.postId = this.postId
-      this.replyForm.uuid = this.post.user.uuid
+      this.replyForm.uuid = this.loginUser.uuid
       if (this.replyForm.uuid === null) {
         this.$message.error('请先登录')
       } else {
@@ -150,4 +163,9 @@ export default Vue.extend({
   text-align: center;
 }
 
+.title {
+  text-align: center;
+  font-size: 20px;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
 </style>

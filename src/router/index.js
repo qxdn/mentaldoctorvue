@@ -5,6 +5,7 @@ import Register from '@/components/Register'
 import Home from '@/components/Home'
 import PostList from '@/components/PostList'
 import Post from '@/components/Post'
+import Index from '@/components/Index'
 
 Vue.use(Router)
 
@@ -19,7 +20,13 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
+      redirect: '/index',
       children: [
+        {
+          path: 'index',
+          name: 'index',
+          component: Index
+        },
         {
           path: 'post',
           name: 'PostList',
