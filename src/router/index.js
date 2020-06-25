@@ -6,6 +6,7 @@ import Home from '@/components/Home'
 import PostList from '@/components/PostList'
 import Post from '@/components/Post'
 import Index from '@/components/Index'
+import UserConsult from '@/components/UserConsult'
 
 Vue.use(Router)
 
@@ -35,6 +36,10 @@ export default new Router({
           path: 'post/:id',
           name: 'Post',
           component: Post
+        }, {
+          path: 'userConsult',
+          name: 'UserConsult',
+          component: UserConsult
         }
       ]
     },

@@ -17,8 +17,10 @@
           </el-row>
         </div>
         <div>
-          <span>{{item.content}}</span>
+          <span class="content">{{item.content}}</span>
         </div>
+        <el-divider></el-divider>
+        <span>{{item.createTime}}</span>
         <span class="el-icon-chat-dot-square">{{item.replyCounts}}</span>
         <span class="el-icon-view">{{item.browses}}</span>
       </el-card>
@@ -154,12 +156,18 @@ export default Vue.extend({
 
 .username {
   font-size: 30px;
-  font-family: 华文行楷;
+  font-family: '华文行楷';
 }
 
 .title {
+  font: bold;
   font-size: 30px;
+  font-style: italic;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+.content {
+  font-family: '宋体';
 }
 
 .input_content {
