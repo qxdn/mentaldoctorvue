@@ -8,14 +8,15 @@
           text-color="#fff"
           active-text-color="#ffd04b"
           router
+          :default-active="$route.path"
           >
-            <el-menu-item index="/">主页</el-menu-item>
+            <el-menu-item index="/index">主页</el-menu-item>
             <el-menu-item index="/post">在线论坛</el-menu-item>
-            <el-submenu>
+            <el-submenu index="1">
               <template slot="title">心理咨询</template>
               <el-menu-item index="/userConsult">我要咨询</el-menu-item>
-              <el-menu-item>我要接单</el-menu-item>
-              <el-menu-item>我要开药</el-menu-item>
+              <el-menu-item index="/">我要接单</el-menu-item>
+              <el-menu-item index="/">我要开药</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-header>

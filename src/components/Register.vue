@@ -1,5 +1,15 @@
 <template>
   <div>
+    <el-menu
+          mode="horizontal"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          router
+          >
+            <el-menu-item index="/">主页</el-menu-item>
+            <el-menu-item index="/post">在线论坛</el-menu-item>
+    </el-menu>
     <el-form
       ref="registerForm"
       :model="registerForm"
