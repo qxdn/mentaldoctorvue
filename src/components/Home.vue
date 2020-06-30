@@ -20,42 +20,44 @@
             </el-submenu>
           </el-menu>
         </el-header>
-      <el-container>
         <el-main>
-          <router-view></router-view>
+          <el-container>
+            <el-main>
+              <router-view></router-view>
+            </el-main>
+            <el-aside  style="margin-top: 2%;">
+              <el-row>
+                <el-input @keydown.enter.native="search" placeholder="搜索" v-model="searchValue"><el-button icon="el-icon-search" slot="append" @click="search">搜索</el-button></el-input>
+              </el-row>
+              <el-row class="block radius aside">
+                <div v-if="isLogin" style="text-align: center;">
+                  <el-row>
+                    <el-col :span="8" style="min-height:1px;"></el-col>
+                    <el-col :span="8"><avatar :username="user.username" ></avatar></el-col>
+                    <el-col :span="8"></el-col>
+                  </el-row>
+                  <el-row>
+                    <h3 class="hello">欢迎回来<span class="name">{{user.username}}</span></h3>
+                  </el-row>
+                  <el-row>
+                      <el-badge :value="6" style="margin-right: 40px;">
+                        <el-button size="small">通知</el-button>
+                      </el-badge>
+                      <el-badge :value="3" >
+                        <el-button size="small">回复</el-button>
+                      </el-badge>
+                  </el-row>
+                  <el-row><el-button type="primary" icon="el-icon-user" class="asideButton">个人中心</el-button></el-row>
+                  <el-row><el-button type="primary" icon="el-icon-switch-button" class="asideButton" @click="logout()">注销</el-button></el-row>
+                </div>
+                <div v-else style="text-align: center;">
+                      <el-button type="primary" @click="toLogin">登录</el-button>
+                      <el-button type="primary" @click="toRegister">注册</el-button>
+                </div>
+              </el-row>
+            </el-aside>
+          </el-container>
         </el-main>
-        <el-aside style="margin-top: 2%;">
-          <el-row>
-            <el-input @keydown.enter.native="search" v-model="searchValue"><el-button icon="el-icon-search" slot="append" @click="search">搜索</el-button></el-input>
-          </el-row>
-          <el-row class="block radius aside" >
-            <div v-if="isLogin" style="text-align: center;">
-              <el-row>
-                <el-col :span="8" style="min-height:1px;"></el-col>
-                <el-col :span="8"><avatar :username="user.username" ></avatar></el-col>
-                <el-col :span="8"></el-col>
-              </el-row>
-              <el-row>
-                <h3 class="hello">欢迎回来<span class="name">{{user.username}}</span></h3>
-              </el-row>
-              <el-row>
-                  <el-badge :value="6" style="margin-right: 40px;">
-                    <el-button size="small">通知</el-button>
-                  </el-badge>
-                  <el-badge :value="3" >
-                    <el-button size="small">回复</el-button>
-                  </el-badge>
-              </el-row>
-              <el-row><el-button type="primary" icon="el-icon-user" class="asideButton">个人中心</el-button></el-row>
-              <el-row><el-button type="primary" icon="el-icon-switch-button" class="asideButton" @click="logout()">注销</el-button></el-row>
-            </div>
-            <div v-else style="text-align: center;">
-                  <el-button type="primary" @click="toLogin">登录</el-button>
-                  <el-button type="primary" @click="toRegister">注册</el-button>
-            </div>
-          </el-row>
-        </el-aside>
-      </el-container>
     </el-container>
     <!--回顶部-->
     <el-backtop></el-backtop>

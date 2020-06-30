@@ -8,7 +8,7 @@
             <el-col :span="2">
               <avatar :username="item.user.username" :size="40"></avatar>
             </el-col>
-            <el-col :span="4">
+            <el-col :span="2">
               <span class="username">{{item.user.username}}</span>
             </el-col>
             <el-col :span="8">
@@ -156,7 +156,8 @@ export default Vue.extend({
 
 .username {
   font-size: 30px;
-  font-family: '华文行楷';
+  font-family: '华文行楷',"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;;
+  color:blue;
 }
 
 .title {
@@ -168,6 +169,7 @@ export default Vue.extend({
 
 .content {
   font-family: '宋体';
+  font-style: italic;
 }
 
 .input_content {

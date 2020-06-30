@@ -4,7 +4,7 @@
       <el-header>
         <el-steps :active="active" finish-status="success">
           <el-step title="在线预约"></el-step>
-          <el-step title="医生回复"></el-step>
+          <el-step title="等待医生回复"></el-step>
           <el-step title="支付"></el-step>
           <el-step title="在线咨询"></el-step>
           <el-step title="评价"></el-step>
@@ -37,7 +37,9 @@
           </div>
           <div v-if="active==3">
             <div>
-            在线咨询
+            <el-image
+              :src="imgSrc"
+            ></el-image>
             </div>
           </div>
           <div v-if="active==4">
@@ -51,8 +53,9 @@
       </el-main>
       <el-footer>
         <div style="text-align: center;">
-          <el-button v-if="active < 4" style="margin-top: 12px;" @click="next">下一步</el-button>
-          <el-button v-if="active == 4" style="margin-top: 12px;" @click="next">提交</el-button>
+           <el-button v-if="active > 0" style="margin-top: 12px;" type="primary" @click="prev">上一步</el-button>
+          <el-button v-if="active < 4" style="margin-top: 12px;" type="primary" @click="next">下一步</el-button>
+          <el-button v-if="active == 4" style="margin-top: 12px;" type="primary" @click="next">提交</el-button>
         </div>
       </el-footer>
     </el-container>
@@ -67,6 +70,7 @@ export default {
       rateValue: null,
       rateTexts: ['极差', '失望', '一般', '满意', '非常满意'],
       dateValue: null,
+      imgSrc: require('../assets/consult.png'),
       pickerOptions: {
         disabledDate (time) {
           // 8.64e7为1天
@@ -93,6 +97,9 @@ export default {
       } else {
         this.active++
       }
+    },
+    prev () {
+      this.active--
     }
   }
 }
